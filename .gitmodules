@@ -1,3 +1,0 @@
-[submodule "gradle/commonlibrary"]
-	path = gradle/commonlibrary
-	url = git://github.com/jakenjarvis/AndroidBuildGradleCommonLibrary.git
