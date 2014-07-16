@@ -5,29 +5,13 @@ repositories {
 }
 
 dependencies {
-    compile "com.j256.ormlite:ormlite-core:${ormliteVersion}"
-    compile "com.j256.ormlite:ormlite-android:${ormliteVersion}"
+    compile 'com.j256.ormlite:ormlite-core:+'
+    compile 'com.j256.ormlite:ormlite-android:+'
 }
 
 android {
-    compileSdkVersion androidCompileSdkVersion
-    buildToolsVersion androidBuildToolsVersion
-
-    buildTypes {
-        defaultConfig {
-            minSdkVersion defaultConfigMinSdkVersion
-            targetSdkVersion defaultConfigTargetSdkVersion
-            versionCode 1
-            versionName project.version
-        }
-
-        debug {
-            debuggable true
-        }
-        release {
-            debuggable false
-        }
-    }
+    compileSdkVersion 20
+    buildToolsVersion "20.0.0"
 
     sourceSets {
         main {
@@ -54,82 +38,3 @@ android {
         release.setRoot('build-types/release')
     }
 }
-
-commonlibrary {
-    apply project, "addTaskArtifactAar"
-    apply project, "addTaskArtifactApklib"
-    apply project, "addTaskArtifactJar"
-    apply project, "addTaskArtifactJavadocJar"
-    apply project, "addTaskArtifactSourceJar"
-
-    apply project, "addTaskCodeQualityCheckstyle"
-    apply project, "addTaskCodeQualityFindbugs"
-    apply project, "addTaskCodeQualityPmd"
-
-    apply project, "NeutralNexus"
-}
-
-checkstyle {
-    ignoreFailures = false
-    showViolations = false
-    configFile = new File("$rootDir/style_checks.xml")
-}
-
-findbugs {
-    ignoreFailures = false
-    effort = "max"
-    excludeFilter file("$projectDir/findbugs-exclude.xml")
-}
-
-pmd {
-    ignoreFailures = true
-    ruleSets = ["android", "basic", "design", "imports", "braces", "strings"]
-}
-
-artifacts {
-    afterEvaluate {
-        archives packageArtifactReleaseAar
-        archives packageArtifactReleaseApklib
-        archives packageArtifactReleaseJar
-        archives packageArtifactReleaseSourceJar
-        archives packageArtifactReleaseJavadocJar
-    }
-}
-
-apply from: "${rootDir}/pom.gradle"
-customizePom {
-    name = "Android-OrmLiteContentProvider Library"
-    description = "This is a library that easy to make using ContentProvider with OrmLite."
-}
-
-nexus {
-    localPublishing = rootProject.ext.localPublishing
-}
-
-ext.javadocLinks = [
-    "http://ormlite.com/javadoc/ormlite-core/",
-    "http://ormlite.com/javadoc/ormlite-android/"
-] as String[]
-
-// http://www.gradle.org/docs/current/userguide/publishing_maven.html
-// http://www.flexlabs.org/2013/06/using-local-aar-android-library-packages-in-gradle-builds
-// http://www.rickcarragher.com/blog/2014/01/21/gradle-and-android
-
-// http://mike-neck.github.io/blog/2013/06/19/publish-maven-artifact-with-sign-files-1/
-// http://mike-neck.github.io/blog/2013/06/21/how-to-publish-artifacts-with-gradle-maven-publish-plugin-version-1-dot-6/
-
-// http://chris.banes.me/2013/08/27/pushing-aars-to-maven-central/
-// https://github.com/chrisbanes/gradle-mvn-push/blob/master/gradle-mvn-push.gradle
-// http://gmariotti.blogspot.jp/2013/09/publish-aar-file-to-maven-central-with.html
-
-
-
-
-// https://github.com/hibernate/hibernate-matrix-testing/blob/master/build.gradle
-// https://github.com/JakeWharton/hugo/blob/master/hugo-plugin/build.gradle
-
-// https://github.com/bmuschko/gradle-nexus-plugin/blob/master/src/main/groovy/org/gradle/api/plugins/nexus/NexusPlugin.groovy
-// https://github.com/bmuschko/gradle-nexus-plugin/blob/master/src/main/groovy/org/gradle/api/plugins/nexus/NexusPluginExtension.groovy
-
-// http://gradle.monochromeroad.com/docs/userguide/signing_plugin.html
-
